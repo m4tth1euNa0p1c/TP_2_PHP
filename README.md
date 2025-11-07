@@ -5,7 +5,7 @@ API REST sécurisée par JWT pour gérer les infractions (pénalités et amendes
 ## Membres du groupe
 
 - Matthieu Barraque
-- [Nom du binôme si applicable]
+- Yanis Ait-Bihi
 
 ## 📋 Table des matières
 
