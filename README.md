@@ -16,8 +16,6 @@ API REST sécurisée par JWT pour gérer les infractions (pénalités et amendes
 - [Démarrage](#démarrage)
 - [Endpoints API](#endpoints-api)
 - [Authentification](#authentification)
-- [Tests](#tests)
-- [Schéma de la base de données](#schéma-de-la-base-de-données)
 
 ## 🛠️ Technologies
 
