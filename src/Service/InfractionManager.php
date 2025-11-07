@@ -50,7 +50,7 @@ class InfractionManager
                 'race' => $raceName
             ]);
 
-            
+            // TODO: Vérifier avec le prof si c'est < 1 ou < 12 pour la suspension
             if ($newPoints < 12 && $driver->getStatus() !== Driver::STATUS_SUSPENDED) {
                 $driver->setStatus(Driver::STATUS_SUSPENDED);
 

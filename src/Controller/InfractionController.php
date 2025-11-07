@@ -32,6 +32,7 @@ class InfractionController extends AbstractController
     {
         try {
             $data = json_decode($request->getContent(), true);
+            // var_dump($data); // debug
 
             if (!$data) {
                 return $this->json([
@@ -73,7 +74,7 @@ class InfractionController extends AbstractController
                 ], Response::HTTP_BAD_REQUEST);
             }
 
-            
+            // TODO: Valider plus strictement le format de date
             try {
                 $occurredAt = new \DateTime($data['occurredAt']);
             } catch (\Exception $e) {
