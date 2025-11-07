@@ -1,0 +1,449 @@
+{
+	"info": {
+		"_postman_id": "f1-api-collection",
+		"name": "F1 Infractions API",
+		"description": "Collection complète pour tester l'API F1 avec JWT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{jwt_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "jwt_token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"jwt_token\", jsonData.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"jwt_token\", jsonData.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"user123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"newuser@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/user/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teams",
+			"item": [
+				{
+					"name": "List All Teams",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/team",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"team"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Team Drivers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/team/1/drivers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"team",
+								"1",
+								"drivers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Team Drivers (Starters Only)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/team/1/drivers?isStarter=true",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"team",
+								"1",
+								"drivers"
+							],
+							"query": [
+								{
+									"key": "isStarter",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Team Drivers (Requires MANAGER)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"add\": [],\n    \"remove\": []\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/team/1/drivers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"team",
+								"1",
+								"drivers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Drivers",
+			"item": [
+				{
+					"name": "List All Drivers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/driver",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"driver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Driver Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/driver/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"driver",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Infractions",
+			"item": [
+				{
+					"name": "List All Infractions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/infractions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"infractions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Infractions by Team",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/infractions?teamId=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"infractions"
+							],
+							"query": [
+								{
+									"key": "teamId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Infractions by Driver",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/infractions?driverId=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"infractions"
+							],
+							"query": [
+								{
+									"key": "driverId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Infractions by Date Range",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/infractions?from=2025-03-01&to=2025-03-31",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"infractions"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2025-03-01"
+								},
+								{
+									"key": "to",
+									"value": "2025-03-31"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Penalty for Driver (ADMIN ONLY)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"PENALTY_POINTS\",\n    \"amount\": 3,\n    \"driverId\": 1,\n    \"raceName\": \"GP Test\",\n    \"occurredAt\": \"2025-07-11T14:00:00Z\",\n    \"description\": \"Dépassement des limites de piste\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/infractions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"infractions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Fine for Team (ADMIN ONLY)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"FINE_EUR\",\n    \"amount\": 50000.00,\n    \"teamId\": 1,\n    \"raceName\": \"GP Test\",\n    \"occurredAt\": \"2025-07-11T16:00:00Z\",\n    \"description\": \"Sortie dangereuse des stands\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/infractions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"infractions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
